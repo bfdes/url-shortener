@@ -1,0 +1,39 @@
+name: Test
+on: push
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    container: golang
+    services:
+      cache:
+        image: memcached:latest
+        ports:
+          - 11211:11211
+      database:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: pass
+          POSTGRES_DB: url-shortener
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          cache: true
+      - name: Run tests
+        run: go test -coverprofile=coverage.txt
+        env:
+          MEMCACHED_HOST: cache
+          POSTGRES_HOST: database
+      - name: Upload test coverage report
+        uses: codecov/codecov-action@v3
