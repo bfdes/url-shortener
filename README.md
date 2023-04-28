@@ -1,6 +1,6 @@
 # url-shortener
 
-![GitHub Actions](https://github.com/bfdes/url-shortener/workflows/Build/badge.svg)
+![GitHub Actions](https://github.com/bfdes/url-shortener/workflows/Test/badge.svg)
 [![Codecov](https://codecov.io/gh/bfdes/url-shortener/branch/master/graph/badge.svg)](https://codecov.io/gh/bfdes/url-shortener)
 
 URL shortener and redirect service [designed for](https://www.notion.so/URL-shortening-8272c692648143698859d9f3524a8b5e#a2becb53582444cfb3e9cce1dd8978ba) low-latency, read-heavy use.
