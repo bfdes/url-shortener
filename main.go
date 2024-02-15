@@ -65,8 +65,8 @@ func main() {
 	db := initDb(dbHost, dbPort, dbUser, dbPassword, dbName)
 	defer db.Close()
 	linkService := linkService{cache, db}
-	http.Handle("/api/links", CreateLinkHandler(linkService))
-	http.Handle("/", RedirectHandler(linkService))
+	http.Handle("POST /api/links", CreateLinkHandler(linkService))
+	http.Handle("GET /{slug...}", RedirectHandler(linkService))
 	port := fmt.Sprintf(":%s", port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }

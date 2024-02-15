@@ -45,19 +45,6 @@ func TestRedirect(t *testing.T) {
 	}
 }
 
-func TestRedirectWrongMethod(t *testing.T) {
-	service := linkServiceStub{}
-	handler := RedirectHandler(service)
-	recorder := httptest.NewRecorder()
-	req, _ := http.NewRequest(http.MethodPost, "/xyz", nil)
-	handler.ServeHTTP(recorder, req)
-	res := recorder.Result()
-	if res.StatusCode != http.StatusMethodNotAllowed {
-		msg := "unexpected status code: wanted %d, got %d instead"
-		t.Fatalf(msg, http.StatusMethodNotAllowed, res.StatusCode)
-	}
-}
-
 func TestRedirectMalformedSlug(t *testing.T) {
 	service := linkServiceStub{
 		get: func(slug string) (string, error) {
@@ -118,19 +105,6 @@ func TestCreate(t *testing.T) {
 	json.Unmarshal(body, &link)
 	if *link.Slug != slug {
 		t.Fail()
-	}
-}
-
-func TestCreateWrongMethod(t *testing.T) {
-	service := linkServiceStub{}
-	handler := CreateLinkHandler(service)
-	recorder := httptest.NewRecorder()
-	req, _ := http.NewRequest(http.MethodPut, "/api/links", nil)
-	handler.ServeHTTP(recorder, req)
-	res := recorder.Result()
-	if res.StatusCode != http.StatusMethodNotAllowed {
-		msg := "unexpected status code: wanted %d, got %d instead"
-		t.Fatalf(msg, http.StatusMethodNotAllowed, res.StatusCode)
 	}
 }
 

@@ -9,7 +9,7 @@ URL shortener and redirect service [designed for](https://www.notion.so/URL-shor
 
 ### Requirements
 
-- [Go](https://golang.org/) 1.21.*
+- [Go](https://golang.org/) 1.22.*
 - [Docker Engine](https://docs.docker.com/engine/) 20.*
 - [Docker Compose](https://docs.docker.com/compose/) 2.*
 

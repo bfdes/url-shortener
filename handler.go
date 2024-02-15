@@ -9,12 +9,7 @@ import (
 
 func RedirectHandler(service LinkService) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			msg := http.StatusText(http.StatusMethodNotAllowed)
-			http.Error(w, msg, http.StatusMethodNotAllowed)
-			return
-		}
-		slug := r.URL.Path[1:]
+		slug := r.PathValue("slug")
 		url, err := service.Get(slug)
 		if err == ErrDecodeFailure {
 			msg := http.StatusText(http.StatusBadRequest)
@@ -30,11 +25,6 @@ func RedirectHandler(service LinkService) http.Handler {
 
 func CreateLinkHandler(service LinkService) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			msg := http.StatusText(http.StatusMethodNotAllowed)
-			http.Error(w, msg, http.StatusMethodNotAllowed)
-			return
-		}
 		if r.Body == nil || r.Body == http.NoBody {
 			msg := http.StatusText(http.StatusBadRequest)
 			http.Error(w, msg, http.StatusBadRequest)
