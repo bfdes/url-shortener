@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -41,7 +41,7 @@ func CreateLinkHandler(service LinkService) http.Handler {
 			return
 		}
 		payload := Link{}
-		body, err := ioutil.ReadAll(r.Body) // DOS attack vector
+		body, err := io.ReadAll(r.Body) // DOS attack vector
 		defer r.Body.Close()
 		if err == nil {
 			err = json.Unmarshal(body, &payload)

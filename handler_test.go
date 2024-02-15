@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -114,7 +114,7 @@ func TestCreate(t *testing.T) {
 		t.Fatalf(msg, http.StatusCreated, res.StatusCode)
 	}
 	link := Link{}
-	body, _ := ioutil.ReadAll(res.Body)
+	body, _ := io.ReadAll(res.Body)
 	json.Unmarshal(body, &link)
 	if *link.Slug != slug {
 		t.Fail()
