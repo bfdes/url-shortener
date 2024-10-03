@@ -25,9 +25,9 @@ jobs:
           --health-retries 5
     steps:
       - name: Pull repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           cache: true
       - name: Run tests
@@ -36,4 +36,6 @@ jobs:
           MEMCACHED_HOST: cache
           POSTGRES_HOST: database
       - name: Upload test coverage report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
